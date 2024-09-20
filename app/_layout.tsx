@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useFonts } from 'expo-font';
 import { config } from "@tamagui/config/v3";
-import { createTamagui, TamaguiProvider, Theme, XStack, YStack, Input } from "tamagui";
+import { createTamagui, TamaguiProvider, Theme, XStack, YStack, Input, ScrollView } from "tamagui";
 import { AppBar } from '@/layouts/appbar';
 import { Button } from '@/layouts/button';
 import { ChangeTheme } from '@/components/theme/ChangeTheme';
+import { NewsList } from '@/components/news/news-list';
 
 const tamaguiConfig = createTamagui(config);
 
@@ -43,6 +44,12 @@ export default function RootLayout() {
             />
             <Button background='outline' />
           </XStack>
+          <ScrollView flex={1} px="$2" mt="$4" w="$full" space="$4">
+            <NewsList />
+            <NewsList />
+            <NewsList />
+            <NewsList />
+          </ScrollView>
         </YStack>
       </Theme>
     </TamaguiProvider>
