@@ -1,37 +1,51 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useState } from 'react';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { config } from "@tamagui/config/v3";
+import { createTamagui, TamaguiProvider, Theme, XStack, YStack, Input } from "tamagui";
+import { AppBar } from '@/layouts/appbar';
+import { Button } from '@/layouts/button';
+import { ChangeTheme } from '@/components/theme/ChangeTheme';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+const tamaguiConfig = createTamagui(config);
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+type Conf = typeof tamaguiConfig;
+declare module "tamagui" {
+  interface TamaguiCustomConfig extends Conf { }
+}
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  const [loaded] = useFonts({
+    Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
+    InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
+  });
 
   if (!loaded) {
     return null;
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
-  );
+    <TamaguiProvider config={tamaguiConfig}>
+      <Theme name={isDarkTheme ? 'dark' : 'light'}>
+        <YStack flex={1} bg="$background" f={1} pb="$6" pt="$8">
+          <XStack jc="space-between" ai="center" px="$2">
+            <AppBar />
+            <ChangeTheme onCheckedChange={setIsDarkTheme} />
+          </XStack>
+          <XStack gap="$2" mt="$4" px="$2">
+            <Input flex={1} w="5" h="5" placeholder='Haberlerde ara...'
+              focusStyle={{
+                bw: 2,
+                bc: '$blue10',
+              }}
+            />
+            <Button background='outline' />
+          </XStack>
+        </YStack>
+      </Theme>
+    </TamaguiProvider>
+  )
 }
+
