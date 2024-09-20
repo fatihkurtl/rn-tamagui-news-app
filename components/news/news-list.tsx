@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import type { CardProps } from "tamagui";
 import { Button, Card, Image, Paragraph, Text, XStack, YStack } from "tamagui";
 
@@ -34,7 +35,7 @@ export function NewsList(props: CardProps) {
                 <Paragraph theme="alt2" mt="$2">
                     Bu bir haber kartı için örnek metindir. Bu alanda haberin kısa bir özeti yer alır. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 </Paragraph>
-                <Button mt="$3" theme="alt2" size="$2" alignSelf="flex-end" bg="$gray6">
+                <Button onPress={() => router.push('/screens/news-detail')} mt="$3" theme="alt2" size="$2" alignSelf="flex-end" bg="$gray6">
                     <Text>Daha Fazla Oku</Text>
                 </Button>
             </YStack>

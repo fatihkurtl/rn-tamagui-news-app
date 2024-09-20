@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SafeAreaView } from "react-native";
 import { useFonts } from 'expo-font';
 import { config } from "@tamagui/config/v3";
-import { createTamagui, TamaguiProvider, Theme, XStack, YStack, Input, ScrollView } from "tamagui";
+import { Stack as NativeStack } from "expo-router";
+import { createTamagui, TamaguiProvider, Theme, XStack, YStack } from "tamagui";
 import { AppBar } from '@/layouts/appbar';
-import { Button } from '@/layouts/button';
 import { ChangeTheme } from '@/components/theme/ChangeTheme';
-import { NewsList } from '@/components/news/news-list';
 
 const tamaguiConfig = createTamagui(config);
 
@@ -13,6 +14,9 @@ type Conf = typeof tamaguiConfig;
 declare module "tamagui" {
   interface TamaguiCustomConfig extends Conf { }
 }
+
+
+const Stack = createNativeStackNavigator();
 
 export default function RootLayout() {
 
@@ -28,9 +32,37 @@ export default function RootLayout() {
   }
 
   return (
-    <TamaguiProvider config={tamaguiConfig}>
-      <Theme name={isDarkTheme ? 'dark' : 'light'}>
-        <YStack flex={1} bg="$background" f={1} pb="$6" pt="$8">
+    <SafeAreaView style={{ flex: 1 }}>
+      <TamaguiProvider config={tamaguiConfig}>
+        <Theme name={isDarkTheme ? 'dark' : 'light'}>
+          <YStack flex={1} bg="$background" f={1} pb="$6" pt="$8">
+            <XStack jc="space-between" ai="center" px="$2">
+              <AppBar />
+              <ChangeTheme onCheckedChange={setIsDarkTheme} />
+            </XStack>
+            <NativeStack>
+              <NativeStack.Screen name="index" options={{ headerShown: false }} />
+              <NativeStack.Screen
+                name="screens/home"
+                options={{ title: "Haberler", headerShown: false }}
+              />
+              <NativeStack.Screen
+                name="screens/news-detail"
+                options={{ title: "Haber Detayı", headerShown: false }}
+              />
+              <NativeStack.Screen
+                name="screens/add-news"
+                options={{ title: "Haber Ekle" }}
+              />
+            </NativeStack>
+          </YStack>
+        </Theme>
+      </TamaguiProvider>
+    </SafeAreaView>
+  )
+}
+
+{/* <YStack flex={1} bg="$background" f={1} pb="$6" pt="$8">
           <XStack jc="space-between" ai="center" px="$2">
             <AppBar />
             <ChangeTheme onCheckedChange={setIsDarkTheme} />
@@ -50,9 +82,4 @@ export default function RootLayout() {
             <NewsList />
             <NewsList />
           </ScrollView>
-        </YStack>
-      </Theme>
-    </TamaguiProvider>
-  )
-}
-
+        </YStack> */}
