@@ -14,6 +14,7 @@ import {
     Adapt,
     Sheet,
     AdaptContents,
+    Image,
 } from "tamagui";
 import { Alert } from "react-native";
 import { ChevronDown } from "@tamagui/lucide-icons";
@@ -41,7 +42,11 @@ export default function AddNews() {
 
     const handleSubmit = () => {
         try {
-            console.log(newsData);
+            if (newsData.title !== "" && newsData.category !== "" && newsData.description !== "" && newsData.imageUrl !== "") {
+                Alert.alert("Başarılı", "Haber eklendi, yönlendiriliyorsunuz...");
+                setNewsData({ title: "", imageUrl: "", description: "", category: "", date: new Date() });
+                // router.push("/screens/home");
+            }
         } catch (error) {
             Alert.alert("Hata", error as string);
         }
@@ -51,7 +56,7 @@ export default function AddNews() {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <AppContainer>
                 <Text fontSize="$6" fontWeight="bold" mb="$4">
-                   Yeni Haber Ekle
+                    Yeni Haber Ekle
                 </Text>
                 <Form onSubmit={handleSubmit}>
                     <YStack space="$4">
@@ -61,6 +66,9 @@ export default function AddNews() {
                             value={newsData.imageUrl}
                             onChangeText={(text) => setNewsData({ ...newsData, imageUrl: text })}
                         />
+                        {newsData.imageUrl && (
+                            <Image source={{ uri: newsData.imageUrl , height: 200 }}  w="100%" resizeMode="contain" borderRadius="$2" />
+                        )}
                         <Select value={newsData.category} onValueChange={(text) => setNewsData({ ...newsData, category: text })}>
                             <Select.Trigger w="100%" iconAfter={ChevronDown}>
                                 <Select.Value placeholder='Kategori Seçin' />
