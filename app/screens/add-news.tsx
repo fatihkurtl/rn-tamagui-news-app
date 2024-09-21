@@ -51,16 +51,15 @@ export default function AddNews() {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <AppContainer>
                 <Text fontSize="$6" fontWeight="bold" mb="$4">
-                    Haber Ekle
+                   Yeni Haber Ekle
                 </Text>
                 <Form onSubmit={handleSubmit}>
                     <YStack space="$4">
                         <Input placeholder='Başlık' value={newsData.title} onChangeText={(text) => setNewsData({ ...newsData, title: text })}></Input>
-                        <TextArea
-                            placeholder='Açıklama'
-                            value={newsData.description}
-                            onChangeText={(text) => setNewsData({ ...newsData, description: text })}
-                            numberOfLines={4}
+                        <Input
+                            placeholder='Görsel URL'
+                            value={newsData.imageUrl}
+                            onChangeText={(text) => setNewsData({ ...newsData, imageUrl: text })}
                         />
                         <Select value={newsData.category} onValueChange={(text) => setNewsData({ ...newsData, category: text })}>
                             <Select.Trigger w="100%" iconAfter={ChevronDown}>
@@ -88,10 +87,14 @@ export default function AddNews() {
                                 onChange={(e) => setNewsData({ ...newsData, date: new Date(e.nativeEvent.text) })}
                             />
                         </XStack>
-                        <Input
-                            placeholder='Görsel URL'
-                            value={newsData.imageUrl}
-                            onChangeText={(text) => setNewsData({ ...newsData, imageUrl: text })}
+                        <TextArea
+                            placeholder='Açıklama'
+                            textAlignVertical="top"
+                            textAlign="left"
+                            multiline={true}
+                            value={newsData.description}
+                            onChangeText={(text) => setNewsData({ ...newsData, description: text })}
+                            numberOfLines={5}
                         />
                         <Button onPress={handleSubmit} themeInverse>
                             Haber Ekle
