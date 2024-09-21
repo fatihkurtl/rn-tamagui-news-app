@@ -13,7 +13,7 @@ const AppContainer = styled(YStack, {
 })
 
 
-export default function HomeScreen() {
+export default function Home() {
 
     const router = useRouter();
 

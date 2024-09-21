@@ -1,6 +1,6 @@
 import { ScrollView, Text, XStack } from 'tamagui';
 
-export default function NewsDetailScreen() {
+export default function NewsDetail() {
     return (
         <ScrollView>
             <XStack>
