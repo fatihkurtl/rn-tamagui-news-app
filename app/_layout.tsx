@@ -34,7 +34,7 @@ export default function RootLayout() {
     <SafeAreaView style={{ flex: 1 }}>
       <TamaguiProvider config={tamaguiConfig}>
         <Theme name={isDarkTheme ? 'dark' : 'light'}>
-          <YStack flex={1} bg="$background" f={1} pb="$6" pt="$8">
+          <YStack flex={1} bg="$background" f={1} pb="$1" pt="$8">
             <XStack jc="space-between" ai="center" px="$2">
               <AppBar />
               <ChangeTheme onCheckedChange={setIsDarkTheme} />

@@ -1,27 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-// import uuid from 'react-native-uuid';
-import {
-    ScrollView,
-    YStack,
-    XStack,
-    Form,
-    Input,
-    Button,
-    Text,
-    TextArea,
-    Select,
-    styled,
-    Adapt,
-    Sheet,
-    AdaptContents,
-    Image,
-} from "tamagui";
 import { Alert } from "react-native";
+import { ScrollView, YStack, XStack, Form, Input, Button, Text, TextArea, Select, styled, Adapt, Sheet, AdaptContents, Image } from "tamagui";
 import { ChevronDown } from "@tamagui/lucide-icons";
+import { db, collection, addDoc } from "../../firebase/index";
 import CategoryMenu from "@/components/addnews/category-menu";
-import { app, db, getFirestore, collection, addDoc } from "../../firebase/index";
-
 
 const AppContainer = styled(YStack, {
     flex: 1,
@@ -30,17 +13,15 @@ const AppContainer = styled(YStack, {
 });
 
 export default function AddNews() {
-
     const categories = ["Tümü", "Teknoloji", "Ekonomi", "Spor", "Sağlık", "Gündem"];
     const router = useRouter();
 
     const [newsData, setNewsData] = useState({
-        // id: uuid.v4(),
         title: "",
         imageUrl: "",
         description: "",
         category: "",
-        date: new Date(),
+        date: new Date().toISOString().split('T')[0], // Başlangıç tarihi ISO formatında string
     });
 
     const handleSubmit = async () => {
@@ -51,14 +32,14 @@ export default function AddNews() {
                     imageUrl: newsData.imageUrl,
                     description: newsData.description,
                     category: newsData.category,
-                    date: new Date(),
+                    date: new Date(newsData.date),
                 });
                 Alert.alert("Başarılı", "Haber eklendi, yönlendiriliyorsunuz...");
                 console.log(newsData);
-                setNewsData({ title: "", imageUrl: "", description: "", category: "", date: new Date() });
+                setNewsData({ title: "", imageUrl: "", description: "", category: "", date: new Date().toISOString().split('T')[0] });
                 router.push("/screens/home");
             } else {
-                Alert.alert("Uyarı", "Haber eklemeden önce bilgileri eksiksiz doldurunuz...");
+                Alert.alert("Uyarı", "Haber eklemeden önce bilgileri eksiksiz doldurunuz...");
             }
         } catch (error) {
             console.log(error);
@@ -74,7 +55,7 @@ export default function AddNews() {
                 </Text>
                 <Form onSubmit={handleSubmit}>
                     <YStack space="$4">
-                        <Input placeholder='Başlık' value={newsData.title} onChangeText={(text) => setNewsData({ ...newsData, title: text })}></Input>
+                        <Input placeholder='Başlık' value={newsData.title} onChangeText={(text) => setNewsData({ ...newsData, title: text })} />
                         <Input
                             placeholder='Görsel URL'
                             value={newsData.imageUrl}
@@ -91,7 +72,6 @@ export default function AddNews() {
                             <Select.Trigger w="100%" iconAfter={ChevronDown}>
                                 <Select.Value placeholder='Kategori Seçin' />
                             </Select.Trigger>
-
                             <Adapt>
                                 <Sheet modal dismissOnSnapToBottom>
                                     <Sheet.Frame>
@@ -101,16 +81,21 @@ export default function AddNews() {
                                     </Sheet.Frame>
                                 </Sheet>
                             </Adapt>
-
                             <CategoryMenu categories={categories} />
-
                         </Select>
                         <XStack alignItems="center">
                             <Text marginRight="$2">Tarih:</Text>
                             <Input
                                 placeholder='Tarih (YYYY-MM-DD)'
-                                value={newsData.date.toISOString().split('T')[0]}
-                                onChange={(e) => setNewsData({ ...newsData, date: new Date(e.nativeEvent.text) })}
+                                value={newsData.date}
+                                onChangeText={(text) => {
+                                    const parsedDate = new Date(text);
+                                    if (!isNaN(parsedDate.getTime())) {
+                                        setNewsData({ ...newsData, date: text });
+                                    } else {
+                                        Alert.alert("Hata", "Geçerli bir tarih formatı giriniz (YYYY-MM-DD)");
+                                    }
+                                }}
                             />
                         </XStack>
                         <TextArea

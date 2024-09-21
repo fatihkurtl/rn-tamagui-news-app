@@ -38,6 +38,7 @@ export default function Home() {
                     date: data.date instanceof Timestamp ? data.date : data.date,
                 } as NewsItem);
             });
+            fetchedNews.sort((a: any, b: any) => b.date - a.date);
             setNews(fetchedNews);
             setFilteredNews(fetchedNews);
             setLoading(false);

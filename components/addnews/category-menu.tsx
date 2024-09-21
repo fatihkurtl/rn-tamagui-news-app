@@ -1,5 +1,5 @@
 import { Text, Select } from "tamagui";
-import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
+import { ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
 
 export default function CategoryMenu({ categories }: any) {
     return (

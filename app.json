@@ -32,6 +32,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5f364973-084a-430d-9dd0-35877fb415a6"
+      }
+    },
+    "owner": "fatihkurtl"
   }
 }
