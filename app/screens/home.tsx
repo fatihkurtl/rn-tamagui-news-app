@@ -14,11 +14,10 @@ const AppContainer = styled(YStack, {
     backgroundColor: "$background",
 })
 
-
 export default function Home() {
     const router = useRouter();
     const [searchValue, setSearchValue] = useState("");
-    const categories = ["Tümü", "Teknoloji", "Ekonomi", "Spor", "Sağlık", "Kültür"];
+    const categories = ["Tümü", "Teknoloji", "Ekonomi", "Spor", "Sağlık", "Gündem"];
     const dateFilters = ["Tümü", "Son 7 gün", "Bu Ay", "Bu Yıl"];
     const [news, setNews] = useState<NewsItem[]>([]);
     const [filteredNews, setFilteredNews] = useState<NewsItem[]>([]);
@@ -50,26 +49,52 @@ export default function Home() {
 
     const handleCategoryChange = (category: string) => {
         setSelectedCategory(category);
-        if (category === "Tümü") {
-            setFilteredNews(news);
-        } else {
-            const filtered = news.filter((item) => item.category === category);
-            setFilteredNews(filtered);
-        }
+        filterNews(category, selectedDateFilter, searchValue);
     }
 
+    const handleDateFilterChange = (dateFilter: string) => {
+        setSelectedDateFilter(dateFilter);
+        filterNews(selectedCategory, dateFilter, searchValue);
+    }
+
+    const handleSearch = (text: string) => {
+        setSearchValue(text);
+        filterNews(selectedCategory, selectedDateFilter, text);
+    };
+
+    const filterNews = (category: string, dateFilter: string, searchTerm: string) => {
+        let filtered = news;
+
+        if (category !== "Tümü") {
+            filtered = filtered.filter((item) => item.category === category);
+        }
+
+        if (dateFilter === "Son 7 gün") {
+            filtered = filtered.filter((item) => item.date >= Timestamp.fromDate(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)));
+        } else if (dateFilter === "Bu Ay") {
+            filtered = filtered.filter((item) => item.date >= Timestamp.fromDate(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)));
+        } else if (dateFilter === "Bu Yıl") {
+            filtered = filtered.filter((item) => item.date >= Timestamp.fromDate(new Date(Date.now() - 365 * 24 * 60 * 60 * 1000)));
+        }
+
+        if (searchTerm) {
+            filtered = filtered.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
+        }
+
+        setFilteredNews(filtered);
+    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <YStack flex={1} bg="$background" f={1} pb="$0" pt="$3">
                 <XStack gap="$2" mt="$0" px="$2" alignItems='center'>
-                    <Input value={searchValue} onChangeText={setSearchValue} flex={1} w="$5" h="$3" placeholder='Haberlerde ara...'
+                    <Input value={searchValue} onChangeText={handleSearch} flex={1} w="$5" h="$3" placeholder='Haberlerde ara...'
                         focusStyle={{
                             bw: 2,
                             bc: '$blue10',
                         }}
                     />
-                    <Button background='outline' h="$3" w="$5" />
+                    {/* <Button background='outline' h="$3" w="$5" /> */}
                 </XStack>
                 {/* <AppContainer> */}
                 <XStack justifyContent='space-between' alignItems='center' padding="$2">
@@ -110,7 +135,7 @@ export default function Home() {
                             </Select.ScrollDownButton>
                         </Select.Content>
                     </Select>
-                    <Select value={selectedDateFilter} onValueChange={setSelectedDateFilter}>
+                    <Select value={selectedDateFilter} onValueChange={handleDateFilterChange}>
                         <Select.Trigger width={150} iconAfter={Calendar}>
                             <Select.Value placeholder='Tarih' />
                         </Select.Trigger>

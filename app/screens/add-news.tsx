@@ -56,7 +56,7 @@ export default function AddNews() {
                 Alert.alert("Başarılı", "Haber eklendi, yönlendiriliyorsunuz...");
                 console.log(newsData);
                 setNewsData({ title: "", imageUrl: "", description: "", category: "", date: new Date() });
-                // router.push("/screens/home");
+                router.push("/screens/home");
             } else {
                 Alert.alert("Uyarı", "Haber eklemeden önce bilgileri eksiksiz doldurunuz...");
             }
