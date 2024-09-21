@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import uuid from 'react-native-uuid';
+// import uuid from 'react-native-uuid';
 import {
     ScrollView,
     YStack,
@@ -35,7 +35,7 @@ export default function AddNews() {
     const router = useRouter();
 
     const [newsData, setNewsData] = useState({
-        id: uuid.v4(),
+        // id: uuid.v4(),
         title: "",
         imageUrl: "",
         description: "",
@@ -53,10 +53,9 @@ export default function AddNews() {
                     category: newsData.category,
                     date: new Date(),
                 });
-                console.log("Document written with", docref);
                 Alert.alert("Başarılı", "Haber eklendi, yönlendiriliyorsunuz...");
                 console.log(newsData);
-                setNewsData({ id: uuid.v4(), title: "", imageUrl: "", description: "", category: "", date: new Date() });
+                setNewsData({ title: "", imageUrl: "", description: "", category: "", date: new Date() });
                 // router.push("/screens/home");
             } else {
                 Alert.alert("Uyarı", "Haber eklemeden önce bilgileri eksiksiz doldurunuz...");

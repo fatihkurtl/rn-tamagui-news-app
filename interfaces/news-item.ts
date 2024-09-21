@@ -1,9 +1,10 @@
-// import { Timestamp } from "@/firebase";
+import { Timestamp } from "@/firebase";
 
-// export interface NewsItem {
-//   id: number | string;
-//   title: string;
-//   description: string;
-//   imageUrl: string;
-//   date: string | Timestamp;
-// }
+export interface NewsItem {
+  id: any;
+  title: string;
+  category: string;
+  imageUrl: string;
+  date: string | Timestamp;
+  description: string;
+}
