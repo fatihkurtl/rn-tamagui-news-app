@@ -17,6 +17,7 @@ export default function HomeScreen() {
 
     const router = useRouter();
 
+    const [searchValue, setSearchValue] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("Tümü");
     const [selectedDateFilter, setSelectedDateFilter] = useState("Tümü");
 
@@ -27,7 +28,7 @@ export default function HomeScreen() {
         <SafeAreaView style={{ flex: 1 }}>
             <YStack flex={1} bg="$background" f={1} pb="$0" pt="$3">
                 <XStack gap="$2" mt="$0" px="$2">
-                    <Input flex={1} w="$5" h="$3" placeholder='Haberlerde ara...'
+                    <Input value={searchValue} onChangeText={setSearchValue} flex={1} w="$5" h="$3" placeholder='Haberlerde ara...'
                         focusStyle={{
                             bw: 2,
                             bc: '$blue10',
