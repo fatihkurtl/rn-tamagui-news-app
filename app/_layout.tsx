@@ -15,7 +15,6 @@ declare module "tamagui" {
   interface TamaguiCustomConfig extends Conf { }
 }
 
-
 const Stack = createNativeStackNavigator();
 
 export default function RootLayout() {
@@ -61,25 +60,3 @@ export default function RootLayout() {
     </SafeAreaView>
   )
 }
-
-{/* <YStack flex={1} bg="$background" f={1} pb="$6" pt="$8">
-          <XStack jc="space-between" ai="center" px="$2">
-            <AppBar />
-            <ChangeTheme onCheckedChange={setIsDarkTheme} />
-          </XStack>
-          <XStack gap="$2" mt="$4" px="$2">
-            <Input flex={1} w="5" h="5" placeholder='Haberlerde ara...'
-              focusStyle={{
-                bw: 2,
-                bc: '$blue10',
-              }}
-            />
-            <Button background='outline' />
-          </XStack>
-          <ScrollView flex={1} px="$2" mt="$4" w="$full" space="$4">
-            <NewsList />
-            <NewsList />
-            <NewsList />
-            <NewsList />
-          </ScrollView>
-        </YStack> */}

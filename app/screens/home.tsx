@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from "expo-router";
-import { XStack, YStack, Input, ScrollView, styled, Select, Adapt, AdaptContents, Sheet, Text } from "tamagui";
+import { XStack, YStack, Input, ScrollView, styled, Select, Adapt, Sheet, Text } from "tamagui";
 import { SafeAreaView } from 'react-native';
 import { Calendar, Check, ChevronDown, ChevronsDown, PlusCircle } from '@tamagui/lucide-icons';
 import { NewsList } from '@/components/news/news-list';
@@ -23,8 +23,10 @@ export default function Home() {
     const [filteredNews, setFilteredNews] = useState<NewsItem[]>([]);
     const [selectedCategory, setSelectedCategory] = useState("Tümü");
     const [selectedDateFilter, setSelectedDateFilter] = useState("Tümü");
+    const [loading, setLoading] = useState(true);
 
     const getNews = async () => {
+        setLoading(true);
         try {
             const querySnapshot = await getDocs(collection(db, "news"));
             const fetchedNews: NewsItem[] = [];
@@ -38,8 +40,11 @@ export default function Home() {
             });
             setNews(fetchedNews);
             setFilteredNews(fetchedNews);
+            setLoading(false);
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -94,15 +99,12 @@ export default function Home() {
                             bc: '$blue10',
                         }}
                     />
-                    {/* <Button background='outline' h="$3" w="$5" /> */}
                 </XStack>
-                {/* <AppContainer> */}
                 <XStack justifyContent='space-between' alignItems='center' padding="$2">
                     <Select value={selectedCategory} onValueChange={handleCategoryChange}>
                         <Select.Trigger width={150} iconAfter={ChevronDown}>
                             <Select.Value placeholder='Kategori' />
                         </Select.Trigger>
-
                         <Adapt when="sm" platform="touch">
                             <Sheet modal dismissOnSnapToBottom>
                                 <Sheet.Frame>
@@ -112,12 +114,10 @@ export default function Home() {
                                 </Sheet.Frame>
                             </Sheet>
                         </Adapt>
-
                         <Select.Content>
                             <Select.ScrollUpButton ai="center" jc="center" pos="relative" w="100%" h="$3">
                                 <ChevronsDown size={20} />
                             </Select.ScrollUpButton>
-
                             <Select.Viewport minWidth={200}>
                                 <Select.Group>
                                     {categories.map((category, index) => (
@@ -139,7 +139,6 @@ export default function Home() {
                         <Select.Trigger width={150} iconAfter={Calendar}>
                             <Select.Value placeholder='Tarih' />
                         </Select.Trigger>
-
                         <Adapt when="sm" platform="touch">
                             <Sheet modal dismissOnSnapToBottom>
                                 <Sheet.Frame>
@@ -150,12 +149,10 @@ export default function Home() {
                                 <Sheet.Overlay />
                             </Sheet>
                         </Adapt>
-
                         <Select.Content>
                             <Select.ScrollUpButton ai="center" jc="center" pos="relative" w="100%" h="$3">
                                 <ChevronsDown size={20} />
                             </Select.ScrollUpButton>
-
                             <Select.Viewport minWidth={200}>
                                 <Select.Group>
                                     {dateFilters.map((dateFilter, index) => (
@@ -182,10 +179,13 @@ export default function Home() {
                     >
                     </Button>
                 </XStack>
-                {/* </AppContainer> */}
                 <ScrollView flex={1} px="$2" mt="$4" w="$full" space="$4">
                     <YStack space="$4">
-                        {filteredNews.length < 1 ? (
+                        {loading ? (
+                            <Text color="$color" fontSize="$4" textAlign="center">
+                                Yükleniyor...
+                            </Text>
+                        ) : filteredNews.length < 1 ? (
                             <Text color="$color" fontSize="$4" textAlign="center">
                                 Hiç Haber Bulunamadı !
                             </Text>
