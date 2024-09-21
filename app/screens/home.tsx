@@ -27,13 +27,13 @@ export default function HomeScreen() {
         <SafeAreaView style={{ flex: 1 }}>
             <YStack flex={1} bg="$background" f={1} pb="$0" pt="$3">
                 <XStack gap="$2" mt="$0" px="$2">
-                    <Input flex={1} w="5" h="5" placeholder='Haberlerde ara...'
+                    <Input flex={1} w="$5" h="$3" placeholder='Haberlerde ara...'
                         focusStyle={{
                             bw: 2,
                             bc: '$blue10',
                         }}
                     />
-                    <Button background='outline' />
+                    {/* <Button background='outline' /> */}
                 </XStack>
                 {/* <AppContainer> */}
                 <XStack justifyContent='space-between' alignItems='center' padding="$2">
@@ -115,8 +115,9 @@ export default function HomeScreen() {
                     <Button
                         onPress={() => router.push("/screens/add-news" as any)}
                         themeInverse
-                        iconAfter={PlusCircle}
+                        icon={PlusCircle}
                         width={50}
+                        h="$4"
                     >
                     </Button>
                 </XStack>
