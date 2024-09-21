@@ -52,7 +52,7 @@ export default function RootLayout() {
               />
               <NativeStack.Screen
                 name="screens/add-news"
-                options={{ title: "Haber Ekle" }}
+                options={{ title: "Haber Ekle", headerShown: false }}
               />
             </NativeStack>
           </YStack>
