@@ -1,7 +1,6 @@
 import { Button as TButton, styled } from 'tamagui';
 import { Search } from '@tamagui/lucide-icons';
 
-
 export const Button = styled(TButton, {
     w: "$5",
     h: "$5",
