@@ -37,6 +37,7 @@ export default function Home() {
                     ...data,
                     date: data.date instanceof Timestamp ? data.date : data.date,
                 } as NewsItem);
+                console.log(data);
             });
             fetchedNews.sort((a: any, b: any) => b.date - a.date);
             setNews(fetchedNews);
@@ -52,6 +53,10 @@ export default function Home() {
     useEffect(() => {
         getNews();
     }, [])
+
+    useEffect(() => {
+        filterNews(selectedCategory, selectedDateFilter, searchValue);
+    }, [selectedCategory, selectedDateFilter]);
 
     const handleCategoryChange = (category: string) => {
         setSelectedCategory(category);

@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native";
-import { ScrollView, YStack, XStack, H2, Paragraph, Image, Text, Separator } from "tamagui";
+import { ScrollView, YStack, XStack, H2, Paragraph, Image, Text, Separator, Button } from "tamagui";
 
 export default function NewsDetail() {
     const [loading, setLoading] = useState(true);
     const params: any = useRoute().params;
+    const navigation = useNavigation();
 
     useEffect(() => {
         setLoading(false);
@@ -17,7 +18,7 @@ export default function NewsDetail() {
                 <Text color="$color" fontSize="$4" textAlign="center" p="$4">Yükleniyor...</Text>
             ) : (
                 <ScrollView bg="$background" flex={1} w="$full" space="$4">
-                    <YStack space="$4" p="$4">
+                    <YStack space="$4" p="$4">                        
                         <Text fontSize="$8">{params?.title}</Text>
                         <XStack justifyContent="space-between" alignItems="center">
                             <Text color="$gray10" fontSize="$3">{params.category}</Text>
@@ -38,10 +39,10 @@ export default function NewsDetail() {
                             <Paragraph color="$color">
                                 {params.description}
                             </Paragraph>
-                        </YStack>
+                        </YStack>                        
                     </YStack>
                 </ScrollView>
             )}
         </SafeAreaView>
-    )
+    );
 }
