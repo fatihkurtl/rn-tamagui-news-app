@@ -1,23 +1,55 @@
 import { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SafeAreaView } from "react-native";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SafeAreaView } from 'react-native';
 import { useFonts } from 'expo-font';
-import { config } from "@tamagui/config/v3";
-import { createTamagui, TamaguiProvider, Theme, XStack, YStack } from "tamagui";
+import { config } from '@tamagui/config/v3';
+import { createTamagui, TamaguiProvider, Theme, XStack, YStack } from 'tamagui';
 import { AppBar } from '@/layouts/appbar';
 import { ChangeTheme } from '@/components/theme/ChangeTheme';
-import Home from './screens/home'; // Home bileşenini içe aktar
-import NewsDetail from './screens/news-detail'; // NewsDetail bileşenini içe aktar
-import AddNews from './screens/add-news'; // AddNews bileşenini içe aktar
+import Home from './screens/home';
+import NewsDetail from './screens/news-detail';
+import AddNews from './screens/add-news';
+import { BadgePlus, Home as HomeIcon } from '@tamagui/lucide-icons';
 
 const tamaguiConfig = createTamagui(config);
 
 type Conf = typeof tamaguiConfig;
-declare module "tamagui" {
+declare module 'tamagui' {
   interface TamaguiCustomConfig extends Conf { }
 }
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function HomeStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{ title: 'Haberler', headerShown: false }}
+      />
+      <Stack.Screen
+        name="NewsDetail"
+        component={NewsDetail}
+        options={{ title: 'Haber Detayı', headerShown: true }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function AddNewsStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="AddNews"
+        component={AddNews}
+        options={{ title: 'Haber Ekle', headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 export default function RootLayout() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -40,31 +72,41 @@ export default function RootLayout() {
               <AppBar />
               <ChangeTheme onCheckedChange={setIsDarkTheme} />
             </XStack>
-            <Stack.Navigator>
-              <Stack.Screen
-                name="index"
-                component={Home}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
+
+            <Tab.Navigator screenOptions={{
+              tabBarStyle: {
+                backgroundColor: isDarkTheme ? '#000' : '#fff',
+                borderTopColor: isDarkTheme ? '#444' : '#ccc',
+              },
+              tabBarActiveTintColor: isDarkTheme ? '#fff' : '#000',
+              tabBarInactiveTintColor: isDarkTheme ? '#888' : '#666',
+            }}>
+              <Tab.Screen
                 name="screens/home"
-                component={Home}
-                options={{ title: "Haberler", headerShown: false }}
+                component={HomeStack}
+                options={{
+                  title: 'Haberler', headerShown: false, tabBarIcon(props) {
+                    return (
+                      <HomeIcon size={props.size} color={props.color} />
+                    )
+                  },
+                }}
               />
-              <Stack.Screen
-                name="screens/news-detail"
-                component={NewsDetail}
-                options={{ title: "Haber Detayı", headerShown: false }}
-              />
-              <Stack.Screen
+              <Tab.Screen
                 name="screens/add-news"
-                component={AddNews}
-                options={{ title: "Haber Ekle", headerShown: false }}
+                component={AddNewsStack}
+                options={{
+                  title: 'Haber Ekle', headerShown: false, tabBarIcon(props) {
+                    return (
+                      <BadgePlus size={props.size} color={props.color} />
+                    )
+                  },
+                }}
               />
-            </Stack.Navigator>
+            </Tab.Navigator>
           </YStack>
         </Theme>
       </TamaguiProvider>
     </SafeAreaView>
-  )
+  );
 }

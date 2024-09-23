@@ -14,7 +14,7 @@ export function NewsList({
     const formattedDate = (date: string | Timestamp) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return date instanceof Timestamp ? new Date(date.toDate()).toLocaleDateString('tr-TR', options as any) : new Date(date).toLocaleDateString('tr-TR', options as any);
-    }
+    };
 
     return (
         <YStack space="$2">
@@ -49,7 +49,13 @@ export function NewsList({
                     <Button
                         onPress={() => router.push({
                             pathname: "/screens/news-detail",
-                            params: { title: title, category: category, imageUrl: imageUrl, description: description, date: formattedDate(date), },
+                            params: { 
+                                title: title, 
+                                category: category, 
+                                imageUrl: imageUrl, 
+                                description: description, 
+                                date: formattedDate(date), 
+                            },
                         })} mt="$3" theme="alt2" size="$2" alignSelf="flex-end" bg="$gray6">
                         <Text color="$color">Daha Fazla Oku</Text>
                     </Button>
