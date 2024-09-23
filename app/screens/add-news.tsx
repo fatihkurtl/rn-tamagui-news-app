@@ -119,7 +119,7 @@ export default function AddNews() {
                                 focusStyle={{
                                     bw: 2,
                                     bc: '$blue10',
-                                }}                                
+                                }}
                             />
                         </XStack>
                         <TextArea

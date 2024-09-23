@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native";
-import { ScrollView, YStack, XStack, H2, Paragraph, Image, Text, Separator, Button } from "tamagui";
+import { ScrollView, YStack, XStack, H2, Paragraph, Image, Text, Separator } from "tamagui";
 
 export default function NewsDetail() {
     const [loading, setLoading] = useState(true);

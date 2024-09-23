@@ -24,7 +24,6 @@ export function NewsList({
             description: string;
             date: string;
         };
-        // Diğer ekranlarınızı buraya ekleyin
     };
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     return (

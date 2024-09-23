@@ -33,7 +33,7 @@ function HomeStack() {
       <Stack.Screen
         name="NewsDetail"
         component={NewsDetail}
-        options={{ title: 'Haber Detayı', headerShown: true }}
+        options={{ title: 'Haber Detayı', headerShown: false }}
       />
     </Stack.Navigator>
   );
