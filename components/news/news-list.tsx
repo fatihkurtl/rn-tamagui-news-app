@@ -1,6 +1,6 @@
-import { router } from "expo-router";
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import type { CardProps } from "tamagui";
-import { Button, Card, Image, Paragraph, Text, XStack, YStack } from "tamagui";
+import { Button, Card, Image, Text, XStack, YStack } from "tamagui";
 import { Timestamp } from "@/firebase";
 import type { NewsItem } from "@/interfaces/news-item";
 
@@ -16,6 +16,17 @@ export function NewsList({
         return date instanceof Timestamp ? new Date(date.toDate()).toLocaleDateString('tr-TR', options as any) : new Date(date).toLocaleDateString('tr-TR', options as any);
     };
 
+    type RootStackParamList = {
+        'screens/news-detail': {
+            title: string;
+            category: string;
+            imageUrl: string;
+            description: string;
+            date: string;
+        };
+        // Diğer ekranlarınızı buraya ekleyin
+    };
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     return (
         <YStack space="$2">
             <Card
@@ -47,16 +58,15 @@ export function NewsList({
                     <Text fontWeight="bold" mt="$1" fontSize="$5" color="$color">{title}</Text>
                     <Text fontWeight="medium" theme="alt2" fontSize="$3">{description.trim().substring(0, 100) + "..."}</Text>
                     <Button
-                        onPress={() => router.push({
-                            pathname: "/screens/news-detail",
-                            params: { 
-                                title: title, 
-                                category: category, 
-                                imageUrl: imageUrl, 
-                                description: description, 
-                                date: formattedDate(date), 
-                            },
-                        })} mt="$3" theme="alt2" size="$2" alignSelf="flex-end" bg="$gray6">
+                        onPress={() => {
+                            navigation.navigate('NewsDetail', {
+                                title: title,
+                                category: category,
+                                imageUrl: imageUrl,
+                                description: description,
+                                date: formattedDate(date),
+                            });
+                        }} mt="$3" theme="alt2" size="$2" alignSelf="flex-end" bg="$gray6">
                         <Text color="$color">Daha Fazla Oku</Text>
                     </Button>
                 </YStack>
