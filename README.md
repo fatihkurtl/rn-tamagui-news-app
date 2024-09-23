@@ -1,10 +1,11 @@
-# Welcome to your Expo app 👋
-![image](https://github.com/user-attachments/assets/eaa09289-5552-470d-ab5c-51b366ef741c)
-![image](https://github.com/user-attachments/assets/ba0f8585-7c9f-46cb-ba4d-e3849a682cad)
-![image](https://github.com/user-attachments/assets/40a13d35-7910-480d-a0f7-baf20d94a2b7)
-![image](https://github.com/user-attachments/assets/f14d19a6-1484-4605-b3d8-907ebe415b07)
-![image](https://github.com/user-attachments/assets/1c3e5b39-1983-4f30-ba16-76debbd6e0e2)
-![image](https://github.com/user-attachments/assets/ee85ad7a-f375-409f-99b7-b879c3cd41dd)
+# React Native Expo, Tamagui, Firebase News App 👋
+![image](https://github.com/user-attachments/assets/15af2996-ef11-4f89-a3f8-7bf3a39630f2)
+![image](https://github.com/user-attachments/assets/89a61ad6-a980-440a-9772-ec51617ed34e)
+![image](https://github.com/user-attachments/assets/b4a386d4-b6f2-4146-ae49-a0a68894d73a)
+![image](https://github.com/user-attachments/assets/a09e94ff-ed71-4da4-a3dc-03314f147538)
+![image](https://github.com/user-attachments/assets/2488c7df-dcda-4549-b998-711bcd69e7c8)
+![image](https://github.com/user-attachments/assets/66ae5515-e49e-472c-8b2d-a2cd333e1a0e)
+
 
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
