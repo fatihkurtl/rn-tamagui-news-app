@@ -102,9 +102,10 @@ export default function AddNews() {
                             </Adapt>
                             <CategoryMenu categories={categories} />
                         </Select>
-                        <XStack alignItems="center">
-                            <Text marginRight="$2">Tarih:</Text>
+                        <XStack alignItems="center" w="100%">
+                            {/* <Text marginRight="$2">Tarih:</Text> */}
                             <Input
+                                w="100%"
                                 placeholder='Tarih (YYYY-MM-DD)'
                                 value={newsData.date}
                                 onChangeText={(text) => {
@@ -118,7 +119,7 @@ export default function AddNews() {
                                 focusStyle={{
                                     bw: 2,
                                     bc: '$blue10',
-                                }}
+                                }}                                
                             />
                         </XStack>
                         <TextArea
